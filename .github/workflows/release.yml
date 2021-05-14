@@ -1,0 +1,41 @@
+name: Build with pyinstaller than release package
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      REPO_PATH: /home/runner/work/wform-cli/wform-cli
+      APP_NAME: wform-cli
+
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: pyinstaller
+      run: |
+        docker run -v "${REPO_PATH}:/src/" cdrx/pyinstaller-windows:python3 "pyinstaller --onefile main.py"
+        mkdir ${REPO_PATH}/win && cp ${REPO_PATH}/dist/main.exe ${REPO_PATH}/win/${APP_NAME}-win.exe
+        docker run -v "${REPO_PATH}:/src/" cdrx/pyinstaller-linux:python3 "pyinstaller --onefile main.py"
+        mkdir ${REPO_PATH}/nix && cp ${REPO_PATH}/dist/main ${REPO_PATH}/nix/${APP_NAME}-linux
+
+    - name: delete last release
+      uses: ame-yu/action-delete-latest-release@v2
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: release
+      uses: softprops/action-gh-release@v1
+      with:
+        body: Latest builds based on main branch.
+        tag_name: latest
+        files: |
+          ${{ env.REPO_PATH }}/win/${{ env.APP_NAME }}-win.exe
+          ${{ env.REPO_PATH }}/nix/${{ env.APP_NAME }}-linux
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
