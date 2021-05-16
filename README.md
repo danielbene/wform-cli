@@ -1,5 +1,5 @@
 # wform-cli
-Python based cli application for generating simple waveform images from audio files. Generation time is about 6-7 seconds for a 30 minute audio (more than half of that is actually saving the image - this is caused by the high resolutions).
+Python based cli application for generating simple waveform images from audio files. Generation time is about 6-7 seconds for a 30 minute audio (more than half of that is actually saving the image - this is caused by the high resolutions). Binary builds are automatic (for Windows, and Linux) and the latest tag follows the state of the main branch.
 
 For detailed options and usage examples please see the included manual, that you can access with the `--help` cli option.
 
