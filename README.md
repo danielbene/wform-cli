@@ -35,6 +35,25 @@ limitations:
         but everything else (mp3, ogg, etc) needs ffmpeg on the system
         (eg.: signed-integer wav encoding is ok, but a-law is not)
     - only png output is supported now (but it allows transparency)
+
+Options:
+    -bg, --background_color TEXT    Set the background color.
+                                    Transparent by default. (eg.: '#FFFFFF')
+    -c, --color TEXT                Set the spike color with hexadecimal value.
+                                    [default: #65909A]
+    -g, --gap INTEGER               Size of the gap between the image border
+                                    and highest spikes. Value is in pixels.
+                                    [default: 100]
+    -h, --height INTEGER            Set the output image height in pixels.
+                                    [default: 1000]
+    -v, --version                   Print application version.
+    -manw, --manual_width INTEGER   Skip optimal image width calculation and set
+                                    the given value.
+    -maxw, --maximum_width INTEGER  Image maximum width in pixels.  [default:
+                                    150000]
+    -minw, --minimum_width INTEGER  Image minimum width in pixels.  [default:
+                                    10000]
+    --help                          Show this message and exit.
 ```
 
 ---
