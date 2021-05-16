@@ -3,7 +3,7 @@ Python based cli application for generating simple waveform images from audio fi
 
 For detailed options and usage examples please see the included manual, that you can access with the `--help` cli option.
 
-You can use the `Waveform` class as a python module if you want the functionality in your project.
+You can simply use the `Waveform` class as a python module too if you want the functionality in your project.
 
 ---
 ## Examples
