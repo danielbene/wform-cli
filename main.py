@@ -6,7 +6,7 @@ from waveform import Waveform
 def print_version(ctx, param, value):
     if not value or ctx.resilient_parsing:
         return
-    click.echo('Version 0.1')
+    click.echo('Version 0.2')
     ctx.exit()
 
 
@@ -17,6 +17,10 @@ def print_version(ctx, param, value):
 @click.option('-c', '--color', default='#65909A',
               show_default=True,
               help='Set the spike color with hexadecimal value.')
+@click.option('-g', '--gap', default=100,
+              show_default=True,
+              help='Size of the gap between the image border \
+                    and highest spikes. Value is in pixels.')
 @click.option('-h', '--height', default=1000,
               show_default=True,
               help='Set the output image height in pixels.')
@@ -34,7 +38,7 @@ def print_version(ctx, param, value):
               help='Image minimum width in pixels.')
 @click.argument('input_path', type=click.Path(exists=True))
 @click.argument('output_path', type=click.Path(exists=False))
-def generate(background_color, color, height, manual_width, maximum_width,
+def generate(background_color, color, gap, height, manual_width, maximum_width,
              minimum_width, input_path, output_path):
     """
     \b
@@ -57,9 +61,10 @@ def generate(background_color, color, height, manual_width, maximum_width,
             (eg.: signed-integer wav encoding is ok, but a-law is not)
         - only png output is supported now (but it allows transparency)
     """
-    waveform = Waveform(input_path, height, manual_width, maximum_width,
+    waveform = Waveform(input_path, gap, height, manual_width, maximum_width,
                         minimum_width)
-    waveform.save(output_path, background_color, color)
+    wform_image = waveform.generate_waveform_image(background_color, color)
+    waveform.save(output_path, wform_image)
 
 
 if __name__ == '__main__':
